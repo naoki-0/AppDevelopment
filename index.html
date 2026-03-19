@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>締め切りタスク管理アプリ</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>締め切りタスク管理</h1>
+      <p>期限が近いタスクを優先して管理しましょう</p>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2 id="form-title">タスクを追加</h2>
+        <form id="task-form">
+          <input type="hidden" id="task-id" />
+          <div class="field-group">
+            <label for="title">タイトル</label>
+            <input id="title" name="title" type="text" required maxlength="120" placeholder="例: レポート提出" />
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="deadline">締め切り日時</label>
+              <input id="deadline" name="deadline" type="datetime-local" required />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="notify">通知タイミング</label>
+              <select id="notify" name="notify">
+                <option value="0">通知なし</option>
+                <option value="1440">1日前</option>
+                <option value="180">3時間前</option>
+                <option value="60" selected>1時間前</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn-primary">保存</button>
+            <button type="button" id="cancel-edit" class="btn-secondary" hidden>編集をキャンセル</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>ダッシュボード</h2>
+        <div id="summary" class="summary-grid"></div>
+      </section>
+
+      <section class="card">
+        <div class="toolbar">
+          <h2>タスク一覧</h2>
+          <div class="toolbar-controls">
+            <label for="filter">表示:</label>
+            <select id="filter">
+              <option value="all" selected>すべて</option>
+              <option value="today">今日</option>
+              <option value="week">今週</option>
+              <option value="overdue">期限切れ</option>
+              <option value="completed">完了済み</option>
+              <option value="incomplete">未完了</option>
+            </select>
+          </div>
+        </div>
+        <ul id="task-list" class="task-list"></ul>
+      </section>
+    </main>
+
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
