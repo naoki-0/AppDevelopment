@@ -28,4 +28,5 @@
 - `index.html` : 画面レイアウト
 - `styles.css` : スタイル
 - `script.js` : タスク管理ロジックと通知機能
+- `USER_GUIDE.md` : 実際の利用手順書
 - `task_deadline_app_project_summary.md` : 企画概要
