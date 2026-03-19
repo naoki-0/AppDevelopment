@@ -5,7 +5,6 @@ const form = document.getElementById('task-form');
 const taskIdInput = document.getElementById('task-id');
 const titleInput = document.getElementById('title');
 const deadlineInput = document.getElementById('deadline');
-const priorityInput = document.getElementById('priority');
 const notifyInput = document.getElementById('notify');
 const cancelEditButton = document.getElementById('cancel-edit');
 const formTitle = document.getElementById('form-title');
@@ -28,7 +27,6 @@ form.addEventListener('submit', (event) => {
     id: taskIdInput.value || createId(),
     title: titleInput.value.trim(),
     deadline: toIsoDateOrNull(deadlineInput.value),
-    priority: priorityInput.value,
     notifyMinutesBefore: Number(notifyInput.value),
     completed: false,
     createdAt: new Date().toISOString(),
@@ -125,7 +123,6 @@ function resetForm() {
   form.reset();
   taskIdInput.value = '';
   notifyInput.value = '60';
-  priorityInput.value = 'medium';
   cancelEditButton.hidden = true;
   formTitle.textContent = 'タスクを追加';
 }
@@ -182,12 +179,11 @@ function renderTaskList() {
           : '<span class="badge">未完了</span>';
 
       return `
-        <li class="task-item" data-priority="${task.priority}">
+        <li class="task-item">
           <div class="task-top">
             <div class="task-title ${completedClass}">${escapeHtml(task.title)}</div>
             <div class="badges">
               ${statusBadge}
-              <span class="badge">${formatPriority(task.priority)}</span>
               <span class="badge">通知: ${formatNotify(task.notifyMinutesBefore)}</span>
             </div>
           </div>
@@ -264,7 +260,6 @@ function startEdit(id) {
   taskIdInput.value = task.id;
   titleInput.value = task.title;
   deadlineInput.value = toLocalDateTimeInput(task.deadline);
-  priorityInput.value = task.priority;
   notifyInput.value = String(task.notifyMinutesBefore);
   cancelEditButton.hidden = false;
   formTitle.textContent = 'タスクを編集';
@@ -339,12 +334,6 @@ function formatDateTime(dateLike) {
     hour: '2-digit',
     minute: '2-digit',
   }).format(date);
-}
-
-function formatPriority(priority) {
-  if (priority === 'high') return '優先度: 高';
-  if (priority === 'medium') return '優先度: 中';
-  return '優先度: 低';
 }
 
 function formatNotify(minutes) {
